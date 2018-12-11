@@ -42,9 +42,9 @@ class Game(object):
         self.players[0] = AIPlayer(name, self.colors[0], 4,3)
         print("{0} will be {1}".format(self.players[0].name, self.colors[0]))
 
-        self.players[1] = AIPlayer("B", self.colors[1], 4,3)
+        # self.players[1] = AIPlayer("B", self.colors[1], 4,3)
         # name = 'MCTSBot' # @TODO: Change this line and next depending on who player2 is
-        # self.players[1] = MCTSPlayer(name, self.colors[1])
+        self.players[1] = MCTSPlayer(name, self.colors[1])
 
         print("{0} will be {1}".format(self.players[1].name, self.colors[1]))
         
@@ -298,8 +298,8 @@ class MCTSPlayer(object):
     type = None 
     name = None
     color = None
-    def __init__(self, name, color, maxIter=50):
-        self.maxIter = maxIter
+    def __init__(self, name, color, maxMinutes=1):
+        self.maxMinutes = maxMinutes
         self.type = "MCTS"
         self.name = name
         self.color = color
@@ -311,7 +311,7 @@ class MCTSPlayer(object):
         o = Node(self.board)
         b1 = (self.board.board)
         ## BEST Move Param
-        bestMove = MCTS(self.maxIter , o, self.factor)
+        bestMove = MCTS(self.maxMinutes, o, self.factor)
         b = copy.deepcopy(bestMove.state)
         b2 = (b.board)
         col = FindColumn(b1, b2)

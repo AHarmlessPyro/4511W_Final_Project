@@ -118,8 +118,9 @@ class Node():
 			return True
 		return False
 
-def MCTS(maxIter, root, factor):
-	for _ in range(maxIter):
+def MCTS(maxMinutes, root, factor):
+	stopTime = time.clock() + (maxMinutes*60)
+	while time.clock() <= stopTime:
 		front, turn = treePolicy( root , 1 , factor )
 		reward = defaultPolicy(front.state, turn)
 		backup(front,reward,turn)
