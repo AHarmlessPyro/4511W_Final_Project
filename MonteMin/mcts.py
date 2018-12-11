@@ -5,18 +5,9 @@ import time
 
 dx = [1, 1, 1,  0]
 dy = [1, 0, -1, 1]
-def get_board_rep(x):
-		if x == ' ':
-			return 0
-		elif x == 'x':
-			return 1
-		elif x == 'o':
-			return -1
-		else:
-			return x
 class Board(object):
     def __init__(self, board, last_move = [None, None]):
-    	self.board = [[get_board_rep(x) for x in row] for row in board]
+    	self.board = board
     	self.last_move = last_move
 
     def tryMove(self, move):
@@ -121,12 +112,12 @@ class Node():
 def MCTS(maxMinutes, root, factor):
 	stopTime = time.clock() + (maxMinutes*60)
 	while time.clock() <= stopTime:
-		front, turn = treePolicy( root , 1 , factor )
+		front, turn = treePolicy(root, 1, factor)
 		reward = defaultPolicy(front.state, turn)
-		backup(front,reward,turn)
+		backup(front, reward, turn)
 
 	print(root.state.board)
-	ans = bestChild(root,0)
+	ans = bestChild(root, 0)
 
 	print([(c.reward/c.visits) for c in ans.parent.children ])
 	return ans
