@@ -7,7 +7,7 @@
 # Play connect four
 # February 27, 2012
 
-from connect42 import Game
+from connect4 import Game
 
 def main():
     """ Play a game!

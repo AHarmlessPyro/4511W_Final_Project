@@ -12,7 +12,7 @@ import os
 import time
 import copy
 from minimax import Minimax
-from Controller import GetMoveM, SetMoveMi, GetMoveMi, SetMoveM
+from controller import GetMoveM, SetMoveMi, GetMoveMi, SetMoveM
 from mcts import Node, MCTS, Board
 
 
