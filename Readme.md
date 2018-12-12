@@ -9,3 +9,4 @@ Minimax logic taken primarily from [Erik Ackermann](https://github.com/erikacker
 5. [ResetFile.py](https://github.com/AHarmlessPyro/4511W_Final_Project/blob/master/MonteMin/ResetFile.py) **was made by us**.
 6. [controller.py](https://github.com/AHarmlessPyro/4511W_Final_Project/blob/master/MonteMin/controller.py) **was made by us** and is used to allow for print and read capabilities.
 
+Game can be run by *insert python3 command* play.py when inside MonteMin folder
