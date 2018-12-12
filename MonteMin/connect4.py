@@ -12,7 +12,7 @@ import os
 import time
 import copy
 from minimax import Minimax
-from controller import GetMoveM, SetMoveMi, GetMoveMi, SetMoveM
+from controller import Get,Set
 from mcts import Node, MCTS, Board
 
 
@@ -44,7 +44,7 @@ class Game(object):
 
         # self.players[1] = AIPlayer("B", self.colors[1], 4,3)
         # name = 'MCTSBot' # @TODO: Change this line and next depending on who player2 is
-        self.players[1] = MCTSPlayer("MCTSBot", self.colors[1], 300)
+        self.players[1] = MCTSPlayer("MCTSBot", self.colors[1], 1000)
 
         print("{0} will be {1}".format(self.players[1].name, self.colors[1]))
         
@@ -107,10 +107,10 @@ class Game(object):
                 self.switchTurn()
                 self.checkForFours()
                 self.printState()
-                if player.color == 'x':
-                    SetMoveMi(move)
-                else:
-                    SetMoveM(move)
+                #if player.color == 'x':
+                Set(move,player.filePrint)
+                #else:
+                #   SetMoveM(move)
                 return
     
         notDone = True
@@ -126,10 +126,10 @@ class Game(object):
                 self.switchTurn()
                 self.checkForFours()
                 self.printState()
-                if player.color == 'x':
-                    SetMoveMi(move)
-                else:
-                    SetMoveM(move)
+                #if player.color == 'x':
+                Set(j,player.filePrint)
+                #else:
+                #    SetMoveM(move)
                 return
         # if we get here, then the column is full
         print("Invalid move (column is full)")
@@ -326,6 +326,8 @@ class MCTSPlayer(object):
     type = None 
     name = None
     color = None
+    fileRead = 'Minimax.txt'
+    filePrint = 'MonteCarlo.txt'
     def __init__(self, name, color, maxMinutes=1):
         self.maxMinutes = maxMinutes
         self.type = "MCTS"
@@ -336,6 +338,8 @@ class MCTSPlayer(object):
 
     def reset(self):
         self = MCTSPlayer(self.name,self.color,self.maxMinutes)
+        self.board = Board([[0 for _ in range(7)] for _ in range(6)])
+
 
     def findBestMove(self):
     	# Returns the best move using MonteCarlo Tree Search
@@ -353,13 +357,12 @@ class MCTSPlayer(object):
 
     def move(self, state):
         print("{0}'s turn.  {0} is {1}".format(self.name, self.color))
-        col = GetMoveMi()
+        col = Get(self.fileRead)
         print("Read board is " + str(col))
         row = self.board.tryMove(col)     
         if row == -1:
             return
         else:
-            #self.p[row][col].setColor("yellow")
             self.board.board[row][col] = -1
         print("attempted row,column is " + str((row,col)) )  
         if row == -1:
@@ -374,6 +377,9 @@ class AIPlayer():
     """
     
     difficulty = None
+    filePrint = 'Minimax.txt'
+    fileRead = 'MonteCarlo.txt'
+
     def __init__(self, name, color, difficulty=5,heuristic = 1):
         self.type = "AI"
         self.name = name

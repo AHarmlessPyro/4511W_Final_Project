@@ -39,20 +39,8 @@ def main():
 
         printStats(player1, player2, win_counts)
 
-        while True:
-            play_again = str(input("Would you like to play again? "))
 
-            if play_again.lower() == 'y' or play_again.lower() == 'yes':
-                g.newGame()
-                g.printState()
-                break
-            elif play_again.lower() == 'n' or play_again.lower() == 'no':
-                print("Thanks for playing!")
-                exit = True
-                break
-            else:
-                print("I don't understand... "),
-
+        exit = True        
 
 def printStats(player1, player2, win_counts):
     print("{0}: {1} wins, {2}: {3} wins, {4} ties".format(player1.name,
