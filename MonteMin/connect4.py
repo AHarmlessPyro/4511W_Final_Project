@@ -99,17 +99,35 @@ class Game(object):
 
         for i in range(6):
             print("Attempting to place at " + str((i,move)))
-            try:
-                if self.board[i][move] == ' ':
-                    self.board[i][move] = player.color
-                    self.switchTurn()
-                    self.checkForFours()
-                    self.printState()
-                    return
-            except :
-                print("Error at " + str(i) + "," + str(move))
-                exit()
+            if self.board[i][move] == ' ':
+                self.board[i][move] = player.color
+                self.switchTurn()
+                self.checkForFours()
+                self.printState()
+                if player.color == 'x':
+                    SetMoveMi(move)
+                else:
+                    SetMoveM(move)
+                return
+    
+        notDone = True
 
+        while notDone:
+            i = random.randint(0,5)
+            j = random.randint(1,6)
+            print("Doing at " + str((i,j)))
+            print("Condition " + str(self.board[i][j] == ' ') + "," )
+            if self.board[i][j] == ' ' and not(self.board[i][j-1] == ' '):
+                notDone = False
+                self.board[i][j] = player.color
+                self.switchTurn()
+                self.checkForFours()
+                self.printState()
+                if player.color == 'x':
+                    SetMoveMi(move)
+                else:
+                    SetMoveM(move)
+                return
         # if we get here, then the column is full
         print("Invalid move (column is full)")
         return
@@ -324,7 +342,7 @@ class MCTSPlayer(object):
         col = FindColumn(b1, b2)
         print("MonteCarloColumn: " + str(col))
         print(b2)
-        SetMoveM(col)
+        #SetMoveM(col)
         return col
 
     def move(self, state):
@@ -362,7 +380,7 @@ class AIPlayer():
         
         m = Minimax(state)
         best_move, _ = m.bestMove(self.difficulty, state, self.color,self.heuristic)
-        SetMoveMi(best_move)
+        #SetMoveMi(best_move)
         print(self.name + ": " + str(best_move))
 
         return best_move
