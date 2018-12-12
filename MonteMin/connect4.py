@@ -64,6 +64,9 @@ class Game(object):
         self.finished = False
         self.winner = None
         
+        if isinstance(self.players[1],MCTSPlayer):
+            self.players[1].reset()
+
         # x always goes first (arbitrary choice on my part)
         self.turn = self.players[0]
         
@@ -116,8 +119,8 @@ class Game(object):
             i = random.randint(0,5)
             j = random.randint(1,6)
             print("Doing at " + str((i,j)))
-            print("Condition " + str(self.board[i][j] == ' ') + "," )
-            if self.board[i][j] == ' ' and not(self.board[i][j-1] == ' '):
+            print("Condition " + str(self.board[i][j] == ' ') + "," +str(not(self.board[i-1][j] == ' ')))
+            if self.board[i][j] == ' ' and not(self.board[i-1][j] == ' '):
                 notDone = False
                 self.board[i][j] = player.color
                 self.switchTurn()
@@ -330,6 +333,9 @@ class MCTSPlayer(object):
         self.color = color
         self.factor = 2.0
         self.board = Board([[0 for _ in range(7)] for _ in range(6)])
+
+    def reset(self):
+        self = MCTSPlayer(self.name,self.color,self.maxMinutes)
 
     def findBestMove(self):
     	# Returns the best move using MonteCarlo Tree Search
