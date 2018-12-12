@@ -39,12 +39,12 @@ class Game(object):
         print(u"Welcome to {0}!".format(self.game_name))
         name = "MinimaxBot"
         diff = 3 # @TODO: Probably means Depth for Minimax
-        self.players[0] = AIPlayer(name, self.colors[0], 4,3)
+        self.players[0] = AIPlayer(name, self.colors[0], 2,1)
         print("{0} will be {1}".format(self.players[0].name, self.colors[0]))
 
         # self.players[1] = AIPlayer("B", self.colors[1], 4,3)
         # name = 'MCTSBot' # @TODO: Change this line and next depending on who player2 is
-        self.players[1] = MCTSPlayer(name, self.colors[1])
+        self.players[1] = MCTSPlayer("MCTSBot", self.colors[1], 300)
 
         print("{0} will be {1}".format(self.players[1].name, self.colors[1]))
         
@@ -95,13 +95,20 @@ class Game(object):
         # move is the column that player want's to play
         move = player.move(self.board)
 
+        print("size of board is " + str(len(self.board)) + " and " + str(len(self.board[0])))
+
         for i in range(6):
-            if self.board[i][move] == ' ':
-                self.board[i][move] = player.color
-                self.switchTurn()
-                self.checkForFours()
-                self.printState()
-                return
+            print("Attempting to place at " + str((i,move)))
+            try:
+                if self.board[i][move] == ' ':
+                    self.board[i][move] = player.color
+                    self.switchTurn()
+                    self.checkForFours()
+                    self.printState()
+                    return
+            except :
+                print("Error at " + str(i) + "," + str(move))
+                exit()
 
         # if we get here, then the column is full
         print("Invalid move (column is full)")
@@ -323,7 +330,14 @@ class MCTSPlayer(object):
     def move(self, state):
         print("{0}'s turn.  {0} is {1}".format(self.name, self.color))
         col = GetMoveMi()
-        row = self.board.tryMove(col)
+        print("Read board is " + str(col))
+        row = self.board.tryMove(col)     
+        if row == -1:
+            return
+        else:
+            #self.p[row][col].setColor("yellow")
+            self.board.board[row][col] = -1
+        print("attempted row,column is " + str((row,col)) )  
         if row == -1:
             raise EnvironmentError("FU")            
         return self.findBestMove()

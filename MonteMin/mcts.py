@@ -11,11 +11,11 @@ class Board(object):
     	self.last_move = last_move
 
     def tryMove(self, move):
-    	# Takes the current board and a possible move specified 
-    	# by the column. Returns the appropiate row where the 
-    	# piece and be located. If it's not found it returns -1.
+    	''' Takes the current board and a possible move specified 
+    	by the column. Returns the appropiate row where the 
+    	piece and be located. If it's not found it returns -1.'''
 
-    	if (move < 0 or move > 7 or self.board[0][move] != 0):
+    	if (move < 0 or move > 6 or self.board[0][move] != 0):
     		return -1
 
     	for i in range(len(self.board)):
@@ -111,7 +111,7 @@ class Node():
 
 def MCTS(maxMinutes, root, factor):
 	stopTime = time.clock() + (maxMinutes*60)
-	while time.clock() <= stopTime:
+	for i in range(maxMinutes):
 		front, turn = treePolicy(root, 1, factor)
 		reward = defaultPolicy(front.state, turn)
 		backup(front, reward, turn)
