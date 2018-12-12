@@ -106,14 +106,16 @@ class Game(object):
                 self.switchTurn()
                 self.checkForFours()
                 self.printState()
-                #if player.color == 'x':
                 Set(move,player.filePrint)
-                #else:
-                #   SetMoveM(move)
                 return
     
         notDone = True
 
+        # this is only used when the mcts algorithm tries to put something in a
+        # full column. As a result, we need to find some other spot to avoid
+        # the algorithm just halting. This still maintains a semblance of control
+        # while still maintaining the randomness aspect. Minimax doesn't suffer
+        # from this.
         while notDone:
             i = random.randint(0,5)
             j = random.randint(0,6)
@@ -125,10 +127,7 @@ class Game(object):
                 self.switchTurn()
                 self.checkForFours()
                 self.printState()
-                #if player.color == 'x':
                 Set(j,player.filePrint)
-                #else:
-                #    SetMoveM(move)
                 return
         # if we get here, then the column is full
         print("Invalid move (column is full)")
