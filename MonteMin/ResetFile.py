@@ -1,10 +1,10 @@
-file_m = 'MonteCarlo.txt'
-file_mi = 'Minimax.txt'
+file_B = 'MonteCarlo.txt'
+file_A = 'Minimax.txt'
 
-file1 = open(file_mi,'w')
+file1 = open(file_A,'w')
 file1.write("F0")
 file1.close()
 
-file1 = open(file_m,'w')
+file1 = open(file_B,'w')
 file1.write("F0")
 file1.close()
