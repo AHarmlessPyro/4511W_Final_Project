@@ -26,7 +26,7 @@ class Game(object):
     winner = None
     turn = None
     players = [None, None]
-    game_name = u"Connecter Quatre\u2122" # U+2122 is "tm" this is a joke
+    game_name = u"Connect-4" 
     colors = ["x", "o"]
     
     def __init__(self):
@@ -34,7 +34,6 @@ class Game(object):
         self.finished = False
         self.winner = None
         
-        # do cross-platform clear screen
         os.system( [ 'clear', 'cls' ][ os.name == 'nt' ] )
         print(u"Welcome to {0}!".format(self.game_name))
         name = "MinimaxBot"
@@ -44,7 +43,7 @@ class Game(object):
 
         # self.players[1] = AIPlayer("B", self.colors[1], 4,3)
         # name = 'MCTSBot' # @TODO: Change this line and next depending on who player2 is
-        self.players[1] = MCTSPlayer("MCTSBot", self.colors[1], 1000)
+        self.players[1] = MCTSPlayer("MCTSBot", self.colors[1], 300)
 
         print("{0} will be {1}".format(self.players[1].name, self.colors[1]))
         
@@ -117,10 +116,10 @@ class Game(object):
 
         while notDone:
             i = random.randint(0,5)
-            j = random.randint(1,6)
+            j = random.randint(0,6)
             print("Doing at " + str((i,j)))
             print("Condition " + str(self.board[i][j] == ' ') + "," +str(not(self.board[i-1][j] == ' ')))
-            if self.board[i][j] == ' ' and not(self.board[i-1][j] == ' '):
+            if self.board[i][j] == ' ' and (i == 0 or not(self.board[i-1][j] == ' ')):
                 notDone = False
                 self.board[i][j] = player.color
                 self.switchTurn()
